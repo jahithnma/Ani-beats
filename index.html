@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANI BEATS | Composer &amp; Beatmaker Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            studio: {
+              dark: '#0e0a09',
+              card: '#191210',
+              elevated: '#241916',
+              red: '#e61c24',
+              redGlow: '#ff2e38',
+              amber: '#f5821f',
+              gold: '#ffb347',
+              wood: '#8b4513',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #0e0a09;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Studio Lighting Glow Effects matching uploaded photography */
+    .amber-spotlight {
+      background: radial-gradient(circle at 75% 30%, rgba(245, 130, 31, 0.28) 0%, rgba(230, 28, 36, 0.14) 38%, rgba(14, 10, 9, 0) 70%);
+    }
+
+    .crimson-aura {
+      box-shadow: 0 0 40px -10px rgba(230, 28, 36, 0.45), 0 0 80px -20px rgba(245, 130, 31, 0.3);
+    }
+
+    .glass-panel {
+      background: rgba(25, 18, 16, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(245, 130, 31, 0.18);
+    }
+
+    .glass-panel-red {
+      background: linear-gradient(145deg, rgba(36, 20, 18, 0.88), rgba(20, 13, 12, 0.92));
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(230, 28, 36, 0.32);
+    }
+
+    /* Equalizer Bar Animations */
+    @keyframes eqBounce {
+      0%, 100% { transform: scaleY(0.22); }
+      50% { transform: scaleY(1); }
+    }
+    .eq-bar {
+      transform-origin: bottom;
+      animation: eqBounce 0.9s ease-in-out infinite;
+    }
+    .eq-paused .eq-bar {
+      animation-play-state: paused;
+      transform: scaleY(0.25);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0e0a09;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #e61c24, #f5821f);
+      border-radius: 9999px;
+    }
+
+    /* FL Studio Step Sequencer Grid styling */
+    .fl-step {
+      transition: all 0.12s ease;
+    }
+    .fl-step.active-kick {
+      background: linear-gradient(135deg, #e61c24, #ff4b2b);
+      box-shadow: 0 0 10px rgba(230, 28, 36, 0.7);
+    }
+    .fl-step.active-snare {
+      background: linear-gradient(135deg, #f5821f, #ffb347);
+      box-shadow: 0 0 10px rgba(245, 130, 31, 0.7);
+    }
+    .fl-step.active-hat {
+      background: linear-gradient(135deg, #10b981, #34d399);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+    }
+    .fl-step.active-melody {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+      box-shadow: 0 0 10px rgba(236, 72, 153, 0.7);
+    }
+    .fl-step.current-col {
+      outline: 2px solid #ffffff;
+      transform: scale(1.08);
+    }
+
+    /* Studio Photo Frame Styling */
+    .studio-photo-frame img,
+    .studio-photo-frame canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-studio-red selection:text-white">
+
+  <!-- Toast Notification Box (Replaces alert) -->
+  <div id="toast-box" class="fixed bottom-5 right-5 z-50 hidden max-w-sm rounded-2xl border border-studio-amber/40 bg-studio-card/95 px-5 py-4 text-white shadow-2xl backdrop-blur-md transition-all duration-300">
+    <div class="flex items-start gap-3">
+      <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-studio-red to-studio-amber text-white">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+        </svg>
+      </div>
+      <div>
+        <h4 id="toast-title" class="text-sm font-bold text-studio-gold">ANI BEATS</h4>
+        <p id="toast-msg" class="mt-0.5 text-xs text-stone-300">Action completed.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Header -->
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-studio-dark/85 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
+      <!-- Brand Logo -->
+      <a href="#home" class="group flex items-center gap-3">
+        <div class="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-studio-red via-orange-600 to-studio-amber p-0.5 shadow-lg shadow-studio-red/30">
+          <div class="flex h-full w-full items-center justify-center rounded-[14px] bg-studio-dark">
+            <svg class="h-6 w-6 text-studio-amber transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" fill="#e61c24" stroke="none" />
+              <circle cx="18" cy="16" r="3" fill="#f5821f" stroke="none" />
+            </svg>
+          </div>
+        </div>
+        <div>
+          <span class="block text-lg font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-studio-amber via-orange-400 to-studio-red">
+            ANI BEATS
+          </span>
+          <span class="block text-[10px] font-bold tracking-[0.26em] text-stone-300 uppercase">
+            MUSIC LAB
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-stone-300">
+        <a href="#beats" class="transition hover:text-studio-amber">Beats &amp; Tracks</a>
+        <a href="#fl-studio" class="transition hover:text-studio-amber">FL Studio Lab</a>
+        <a href="#gallery" class="transition hover:text-studio-amber">Studio Gallery</a>
+        <a href="#merch" class="transition hover:text-studio-amber">Official Merch</a>
+        <a href="#contact" class="transition hover:text-studio-amber">Book Session</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="openCartModal()" class="relative flex items-center justify-center rounded-xl border border-white/15 bg-studio-card p-2.5 text-stone-200 transition hover:border-studio-amber hover:text-studio-amber" aria-label="View Cart">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span id="cart-badge" class="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-studio-red text-[11px] font-bold text-white">0</span>
+        </button>
+
+        <a href="https://bandcamp.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-studio-red to-studio-amber px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-studio-red/30 transition hover:brightness-110 active:scale-95">
+          <span>Bandcamp Store</span>
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+          </svg>
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="rounded-xl border border-white/15 bg-studio-card p-2.5 text-stone-200 md:hidden" aria-label="Menu">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Drawer -->
+    <div id="mobile-menu" class="hidden border-t border-white/10 bg-studio-card px-4 py-4 md:hidden">
+      <div class="flex flex-col space-y-3 text-sm font-semibold text-stone-200">
+        <a href="#beats" class="rounded-xl px-3 py-2 hover:bg-white/5 hover:text-studio-amber">Beats &amp; Tracks</a>
+        <a href="#fl-studio" class="rounded-xl px-3 py-2 hover:bg-white/5 hover:text-studio-amber">FL Studio Lab</a>
+        <a href="#gallery" class="rounded-xl px-3 py-2 hover:bg-white/5 hover:text-studio-amber">Studio Gallery</a>
+        <a href="#merch" class="rounded-xl px-3 py-2 hover:bg-white/5 hover:text-studio-amber">Official Merch</a>
+        <a href="#contact" class="rounded-xl px-3 py-2 hover:bg-white/5 hover:text-studio-amber">Book Session</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="home" class="relative overflow-hidden amber-spotlight pt-8 pb-16 sm:pt-14 sm:pb-24">
+    <!-- Decorative Warm Studio Ambient Orbs -->
+    <div class="pointer-events-none absolute -left-24 top-20 h-80 w-80 rounded-full bg-studio-red/20 blur-3xl"></div>
+    <div class="pointer-events-none absolute right-0 top-10 h-96 w-96 rounded-full bg-studio-amber/20 blur-3xl"></div>
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+        
+        <!-- Left Column: Typography & Interactive Controls -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="inline-flex items-center gap-2.5 rounded-full border border-studio-amber/35 bg-studio-card/90 px-4 py-1.5 text-xs font-bold tracking-wide text-studio-gold shadow-md">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-studio-red opacity-75"></span>
+              <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-studio-red"></span>
+            </span>
+            <span>MUSIC COMPOSER • BEATMAKER • SOUND ENGINEER</span>
+          </div>
+
+          <h1 class="text-4xl font-black tracking-tight sm:text-6xl lg:text-[64px] leading-[1.08]">
+            Crafting Fire Beats at
+            <span class="block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-studio-red via-orange-500 to-studio-amber">
+              ANI BEATS
+            </span>
+          </h1>
+
+          <p class="max-w-2xl text-base sm:text-lg leading-relaxed text-stone-300">
+            Welcome to the official sound sanctuary of <strong class="text-white">ANI BEATS</strong>. From hard-hitting <span class="text-studio-amber font-semibold">Hip-Hop/Rap &amp; Trap beats</span> to soulful <span class="text-studio-red font-semibold">Lo-Fi instrumentals</span>, custom vocal recordings, and exclusive studio merch—stream, license, and own the vibe directly.
+          </p>
+
+          <!-- Genre Tags matching Bandcamp Categories -->
+          <div class="flex flex-wrap gap-2 pt-1">
+            <span class="rounded-xl border border-studio-red/40 bg-studio-red/15 px-3.5 py-1.5 text-xs font-bold text-red-300">#HipHopRap</span>
+            <span class="rounded-xl border border-studio-amber/40 bg-studio-amber/15 px-3.5 py-1.5 text-xs font-bold text-amber-300">#TrapBeats</span>
+            <span class="rounded-xl border border-orange-500/40 bg-orange-500/15 px-3.5 py-1.5 text-xs font-bold text-orange-300">#FLStudioProducer</span>
+            <span class="rounded-xl border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-bold text-stone-200">#BeatTapes</span>
+            <span class="rounded-xl border border-emerald-500/35 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-bold text-emerald-300">#ISRCVerified</span>
+          </div>
+
+          <!-- Primary CTA Row -->
+          <div class="flex flex-wrap items-center gap-4 pt-3">
+            <a href="#beats" class="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-studio-red via-red-600 to-studio-amber px-7 py-4 text-sm sm:text-base font-extrabold text-white shadow-xl shadow-studio-red/35 transition hover:scale-[1.02] active:scale-95">
+              <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <span>Listen to Beats Live</span>
+            </a>
+
+            <a href="#fl-studio" class="inline-flex items-center gap-2.5 rounded-2xl border border-studio-amber/40 bg-studio-card/90 px-6 py-4 text-sm sm:text-base font-bold text-studio-gold transition hover:bg-studio-elevated">
+              <svg class="h-5 w-5 text-studio-amber" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+              </svg>
+              <span>FL Studio Beat Maker</span>
+            </a>
+          </div>
+
+          <!-- Studio Metrics Bar -->
+          <div class="grid grid-cols-3 gap-4 border-t border-white/10 pt-6 sm:max-w-lg">
+            <div>
+              <p class="text-2xl sm:text-3xl font-black text-white">120+</p>
+              <p class="text-xs font-medium text-stone-400">Original Beats</p>
+            </div>
+            <div>
+              <p class="text-2xl sm:text-3xl font-black text-studio-amber">24-Bit</p>
+              <p class="text-xs font-medium text-stone-400">WAV / FLAC Stems</p>
+            </div>
+            <div>
+              <p class="text-2xl sm:text-3xl font-black text-studio-red">100%</p>
+              <p class="text-xs font-medium text-stone-400">ISRC &amp; UPC Ready</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Main Studio Hero Portrait (6977.jpg) with Warm Amber & Red Framing -->
+        <div class="lg:col-span-5">
+          <div class="relative mx-auto max-w-md">
+            <!-- Glowing Back Frame -->
+            <div class="absolute -inset-2 rounded-[32px] bg-gradient-to-tr from-studio-red via-orange-500 to-studio-amber opacity-75 blur-lg"></div>
+            
+            <div class="studio-photo-frame relative overflow-hidden rounded-[28px] border-2 border-studio-amber/50 bg-studio-card shadow-2xl">
+              <div class="relative h-[460px] sm:h-[520px] w-full">
+                <img
+                  id="hero-studio-img"
+                  data-photo-key="6977.jpg"
+                  src="6977.jpg"
+                  alt="ANI BEATS Composer pointing in studio with RODE condenser mic"
+                  class="h-full w-full object-cover object-top transition duration-700 hover:scale-105"
+                />
+                <canvas
+                  id="hero-studio-canvas"
+                  data-photo-key="6977.jpg"
+                  class="hidden h-full w-full object-cover"
+                ></canvas>
+              </div>
+
+              <!-- Quick Studio Photo Switcher Pill Bar (All 5 Uploaded Photos) -->
+              <div class="absolute top-3 left-3 right-3 z-10 flex items-center justify-between gap-2 rounded-2xl border border-white/15 bg-studio-dark/80 px-3 py-2 backdrop-blur-md">
+                <span class="font-mono text-[10px] font-bold uppercase tracking-wider text-studio-amber">Studio Cam</span>
+                <div class="flex items-center gap-1.5" id="hero-photo-switcher">
+                  <button type="button" onclick="setHeroPhoto('6977.jpg', 'ANI BEATS — Lead Composer & Beatmaker (6977.jpg)', this)" class="hero-cam-btn active rounded-lg bg-gradient-to-r from-studio-red to-studio-amber px-2 py-1 font-mono text-[10px] font-extrabold text-white">01</button>
+                  <button type="button" onclick="setHeroPhoto('6978.jpg', 'Vocal & Beat Booth Session (6978.jpg)', this)" class="hero-cam-btn rounded-lg bg-white/10 px-2 py-1 font-mono text-[10px] font-bold text-stone-200 hover:bg-white/20">02</button>
+                  <button type="button" onclick="setHeroPhoto('6982.jpg', 'Mixing & 808 Monitoring (6982.jpg)', this)" class="hero-cam-btn rounded-lg bg-white/10 px-2 py-1 font-mono text-[10px] font-bold text-stone-200 hover:bg-white/20">03</button>
+                  <button type="button" onclick="setHeroPhoto('6980.jpg', 'Amber Studio Composition Flow (6980.jpg)', this)" class="hero-cam-btn rounded-lg bg-white/10 px-2 py-1 font-mono text-[10px] font-bold text-stone-200 hover:bg-white/20">04</button>
+                  <button type="button" onclick="setHeroPhoto('6955.png', 'Late Night Crimson Lab Session (6955.png)', this)" class="hero-cam-btn rounded-lg bg-white/10 px-2 py-1 font-mono text-[10px] font-bold text-stone-200 hover:bg-white/20">05</button>
+                </div>
+              </div>
+              
+              <!-- Bottom Overlay Badge -->
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-studio-dark via-studio-dark/90 to-transparent p-5">
+                <div class="flex items-center justify-between gap-3 rounded-2xl border border-white/15 bg-studio-card/90 p-3.5 backdrop-blur-md">
+                  <div class="flex items-center gap-3">
+                    <!-- Animated Mini Equalizer -->
+                    <div id="hero-eq" class="flex h-8 w-8 items-end justify-center gap-1 rounded-xl bg-gradient-to-br from-studio-red to-studio-amber p-1.5">
+                      <span class="eq-bar w-1 h-full bg-white rounded-full" style="animation-delay: 0.1s"></span>
+                      <span class="eq-bar w-1 h-full bg-white rounded-full" style="animation-delay: 0.3s"></span>
+                      <span class="eq-bar w-1 h-full bg-white rounded-full" style="animation-delay: 0.2s"></span>
+                      <span class="eq-bar w-1 h-full bg-white rounded-full" style="animation-delay: 0.4s"></span>
+                    </div>
+                    <div>
+                      <p class="text-xs font-bold uppercase tracking-wider text-studio-amber">Now Streaming</p>
+                      <p id="hero-now-playing" class="text-sm font-extrabold text-white">Ani Midnight Trap (140 BPM)</p>
+                    </div>
+                  </div>
+                  <button onclick="toggleTrack(0)" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-studio-red text-white shadow-md transition hover:bg-red-500" aria-label="Play Featured Beat">
+                    <svg id="hero-play-icon" class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating Hardware Tag -->
+            <div class="animate-float hidden sm:flex absolute -left-8 top-10 items-center gap-2.5 rounded-2xl border border-studio-red/40 bg-studio-card/95 px-4 py-2.5 shadow-xl backdrop-blur-md">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-studio-red/20 text-studio-red font-mono text-xs font-bold">RØDE</span>
+              <div>
+                <p class="text-xs font-bold text-white">Vocal &amp; Beat Booth</p>
+                <p class="text-[11px] text-studio-amber">ANI BEATS Studio Acoustics</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE BEAT CATALOG & SYNTHESIZER PLAYER SECTION -->
+  <section id="beats" class="relative border-t border-white/10 bg-studio-card/50 py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col justify-between gap-4 md:flex-row md:items-end mb-10">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-[0.22em] text-studio-amber">Bandcamp Digital Releases &amp; Beats</span>
+          <h2 class="mt-2 text-3xl font-black sm:text-4xl text-white">
+            Featured <span class="text-transparent bg-clip-text bg-gradient-to-r from-studio-red to-studio-amber">Beat Tape</span> &amp; Instrumentals
+          </h2>
+          <p class="mt-2 max-w-2xl text-sm sm:text-base text-stone-300">
+            Click <strong class="text-white">Play Preview</strong> on any track below to audition real-time synthesized beat loops directly in your browser, inspect ISRC/UPC release metadata, or grab the WAV/FLAC download.
+          </p>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterTracks('all')" class="track-filter-btn active rounded-xl bg-gradient-to-r from-studio-red to-studio-amber px-4 py-2 text-xs font-bold text-white shadow">All Beats</button>
+          <button onclick="filterTracks('Hip-Hop/Rap')" class="track-filter-btn rounded-xl border border-white/15 bg-studio-card px-4 py-2 text-xs font-bold text-stone-300 hover:border-studio-amber">Hip-Hop/Rap</button>
+          <button onclick="filterTracks('Electronic')" class="track-filter-btn rounded-xl border border-white/15 bg-studio-card px-4 py-2 text-xs font-bold text-stone-300 hover:border-studio-amber">Electronic</button>
+          <button onclick="filterTracks('R&B/Soul')" class="track-filter-btn rounded-xl border border-white/15 bg-studio-card px-4 py-2 text-xs font-bold text-stone-300 hover:border-studio-amber">R&amp;B/Soul</button>
+        </div>
+      </div>
+
+      <!-- Live Audio Visualizer Canvas Bar -->
+      <div class="glass-panel-red mb-8 rounded-3xl p-4 sm:p-6 shadow-2xl">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-3">
+          <div class="flex items-center gap-3">
+            <span class="flex h-3 w-3 rounded-full bg-studio-amber animate-ping"></span>
+            <span id="visualizer-status" class="font-mono text-xs sm:text-sm font-bold text-studio-gold">
+              AUDIO ENGINE READY — CLICK ANY BEAT TO START REAL-TIME SYNTH PREVIEW
+            </span>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs text-stone-300">
+            <span>MASTER OUT:</span>
+            <span class="rounded bg-emerald-500/20 px-2 py-0.5 text-emerald-300 font-bold">24-BIT / 48kHz</span>
+          </div>
+        </div>
+        <div class="relative h-20 w-full overflow-hidden rounded-2xl bg-studio-dark/90 border border-white/10">
+          <canvas id="visualizer-canvas" class="h-full w-full block"></canvas>
+        </div>
+      </div>
+
+      <!-- Beats Grid -->
+      <div id="tracks-grid" class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <!-- Populated dynamically via JS for interactive audio binding -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FL STUDIO & COMPOSING LAB WORKSPACE SECTION -->
+  <section id="fl-studio" class="relative overflow-hidden border-t border-white/10 py-16 sm:py-24">
+    <div class="pointer-events-none absolute right-10 top-1/3 h-96 w-96 rounded-full bg-studio-red/15 blur-3xl"></div>
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-extrabold uppercase tracking-[0.22em] text-studio-red">Inside The Production Lab</span>
+        <h2 class="mt-2 text-3xl font-black sm:text-5xl text-white">
+          FL Studio <span class="text-transparent bg-clip-text bg-gradient-to-r from-studio-amber to-studio-red">Composing &amp; Beatmaking</span>
+        </h2>
+        <p class="mt-3 text-sm sm:text-base text-stone-300">
+          Every beat is meticulously arranged, layered, and mixed inside <strong class="text-studio-amber">FL Studio</strong> with analog warmth, crisp 808s, and studio-grade vocal chains. Test our interactive 16-step FL Channel Rack right below!
+        </p>
+      </div>
+
+      <!-- Interactive Mini FL Studio Channel Rack / Step Sequencer -->
+      <div class="glass-panel mb-14 rounded-3xl border border-studio-amber/30 p-5 sm:p-8 shadow-2xl">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5 mb-6">
+          <div class="flex items-center gap-3">
+            <!-- FL Studio Style Fruit/Flame Badge -->
+            <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-studio-red text-white shadow-lg">
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C9.5 5.5 7 8 7 12.5C7 16.09 9.91 19 13.5 19C16.54 19 19 16.54 19 13.5C19 10.5 16.5 7.5 15 6C15 8.5 13.5 9.5 12.5 9.5C13.5 7 13 4 12 2Z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-black text-white flex items-center gap-2">
+                <span>ANI BEATS FL CHANNEL RACK</span>
+                <span class="rounded-md bg-studio-amber/20 px-2 py-0.5 font-mono text-[11px] font-bold text-studio-amber">PATTERN 1</span>
+              </h3>
+              <p class="text-xs text-stone-400">Tap pads to customize your own beat pattern &amp; hit Play Pattern</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-2 rounded-xl border border-white/15 bg-studio-dark px-3.5 py-2 font-mono text-xs">
+              <span class="text-stone-400">BPM:</span>
+              <input id="seq-bpm" type="number" min="75" max="170" value="130" class="w-12 bg-transparent font-bold text-studio-amber focus:outline-none" />
+            </div>
+
+            <button id="seq-play-btn" onclick="toggleSequencer()" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-studio-red to-studio-amber px-5 py-2.5 text-xs font-extrabold text-white shadow-lg transition hover:brightness-110">
+              <svg id="seq-play-icon" class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <span id="seq-play-text">Play Pattern</span>
+            </button>
+
+            <button onclick="resetSequencer()" class="rounded-xl border border-white/15 bg-studio-dark px-3.5 py-2.5 text-xs font-bold text-stone-300 hover:border-studio-red hover:text-white">
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <!-- 16-Step Grid -->
+        <div class="overflow-x-auto pb-2">
+          <div id="sequencer-rows" class="min-w-[680px] space-y-3">
+            <!-- Sequencer rows injected via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Studio Composition Showcase: Custom FL Studio Illustration + Uploaded Studio Photos -->
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 items-center">
+        
+        <!-- Custom High-Detail FL Studio DAW & MIDI Production Visual -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="relative overflow-hidden rounded-3xl border border-studio-amber/35 bg-studio-card p-4 sm:p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="h-3 w-3 rounded-full bg-studio-red"></span>
+                <span class="h-3 w-3 rounded-full bg-studio-amber"></span>
+                <span class="h-3 w-3 rounded-full bg-emerald-500"></span>
+                <span class="ml-2 font-mono text-xs font-bold text-stone-300">FL Studio 21 — Ani_Beats_Master_Project.flp</span>
+              </div>
+              <span class="rounded-lg bg-studio-red/20 px-2.5 py-1 font-mono text-[11px] font-bold text-studio-red">CPU 18% • 48kHz</span>
+            </div>
+
+            <!-- Custom Illustrated FL Studio Playlist + Piano Roll + Mixer Graphic -->
+            <svg viewBox="0 0 800 430" class="w-full h-auto rounded-2xl border border-white/10 bg-[#14100f]" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="clipRed" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#e61c24" />
+                  <stop offset="100%" stop-color="#ff4d4d" />
+                </linearGradient>
+                <linearGradient id="clipAmber" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#f5821f" />
+                  <stop offset="100%" stop-color="#ffb347" />
+                </linearGradient>
+                <linearGradient id="clipTeal" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#059669" />
+                  <stop offset="100%" stop-color="#34d399" />
+                </linearGradient>
+                <linearGradient id="clipPurple" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#9333ea" />
+                  <stop offset="100%" stop-color="#ec4899" />
+                </linearGradient>
+              </defs>
+
+              <!-- Top Toolbar -->
+              <rect x="0" y="0" width="800" height="38" fill="#1f1816" />
+              <circle cx="24" cy="19" r="9" fill="#f5821f" />
+              <text x="42" y="23" fill="#ffffff" font-family="monospace" font-size="12" font-weight="bold">PLAYLIST — ARRANGEMENT 1</text>
+              <rect x="330" y="8" width="90" height="22" rx="5" fill="#120d0c" stroke="#f5821f" stroke-width="1" />
+              <text x="345" y="23" fill="#ffb347" font-family="monospace" font-size="12" font-weight="bold">140.00 BPM</text>
+              <rect x="435" y="8" width="110" height="22" rx="5" fill="#120d0c" stroke="#e61c24" stroke-width="1" />
+              <text x="448" y="23" fill="#ff6b6b" font-family="monospace" font-size="12" font-weight="bold">002:03:01</text>
+
+              <!-- Left Track Headers -->
+              <rect x="0" y="38" width="135" height="242" fill="#1a1311" />
+              <g font-family="sans-serif" font-size="11" font-weight="bold" fill="#e5e5e5">
+                <rect x="6" y="45" width="122" height="32" rx="6" fill="#291d1a" />
+                <circle cx="18" cy="61" r="4" fill="#e61c24" />
+                <text x="28" y="65">Track 1 • 808 Bass</text>
+
+                <rect x="6" y="83" width="122" height="32" rx="6" fill="#291d1a" />
+                <circle cx="18" cy="99" r="4" fill="#f5821f" />
+                <text x="28" y="103">Track 2 • Trap Kick</text>
+
+                <rect x="6" y="121" width="122" height="32" rx="6" fill="#291d1a" />
+                <circle cx="18" cy="137" r="4" fill="#10b981" />
+                <text x="28" y="141">Track 3 • Hi-Hat Roll</text>
+
+                <rect x="6" y="159" width="122" height="32" rx="6" fill="#291d1a" />
+                <circle cx="18" cy="175" r="4" fill="#ec4899" />
+                <text x="28" y="179">Track 4 • Lead Synth</text>
+
+                <rect x="6" y="197" width="122" height="32" rx="6" fill="#291d1a" />
+                <circle cx="18" cy="213" r="4" fill="#ffb347" />
+                <text x="28" y="217">Track 5 • Guitar Chop</text>
+
+                <rect x="6" y="235" width="122" height="32" rx="6" fill="#291d1a" />
+                <circle cx="18" cy="251" r="4" fill="#38bdf8" />
+                <text x="28" y="255">Track 6 • RØDE Vox</text>
+              </g>
+
+              <!-- Playlist Grid Lines -->
+              <g stroke="#2a201d" stroke-width="1">
+                <line x1="210" y1="38" x2="210" y2="280" />
+                <line x1="290" y1="38" x2="290" y2="280" />
+                <line x1="370" y1="38" x2="370" y2="280" />
+                <line x1="450" y1="38" x2="450" y2="280" />
+                <line x1="530" y1="38" x2="530" y2="280" />
+                <line x1="610" y1="38" x2="610" y2="280" />
+                <line x1="690" y1="38" x2="690" y2="280" />
+              </g>
+
+              <!-- Arrangement Clips -->
+              <!-- Track 1 808s -->
+              <rect x="145" y="47" width="150" height="28" rx="6" fill="url(#clipRed)" opacity="0.92" />
+              <text x="155" y="65" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">Sub_808_Glide</text>
+              <rect x="305" y="47" width="220" height="28" rx="6" fill="url(#clipRed)" opacity="0.92" />
+              <text x="315" y="65" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">Sub_808_Heavy_Drop</text>
+              <rect x="535" y="47" width="245" height="28" rx="6" fill="url(#clipRed)" opacity="0.92" />
+              <text x="545" y="65" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">Sub_808_Outro</text>
+
+              <!-- Track 2 Kick & Snare -->
+              <rect x="220" y="85" width="305" height="28" rx="6" fill="url(#clipAmber)" opacity="0.92" />
+              <text x="230" y="103" fill="#120d0c" font-family="monospace" font-size="10" font-weight="bold">Ani_Punch_Drums</text>
+              <rect x="535" y="85" width="245" height="28" rx="6" fill="url(#clipAmber)" opacity="0.92" />
+              <text x="545" y="103" fill="#120d0c" font-family="monospace" font-size="10" font-weight="bold">Ani_Hook_Drums</text>
+
+              <!-- Track 3 Hi-Hats -->
+              <rect x="145" y="123" width="635" height="28" rx="6" fill="url(#clipTeal)" opacity="0.88" />
+              <text x="155" y="141" fill="#062118" font-family="monospace" font-size="10" font-weight="bold">1/32_Trap_HiHat_Rolls_Pattern</text>
+
+              <!-- Track 4 Lead Synth -->
+              <rect x="145" y="161" width="380" height="28" rx="6" fill="url(#clipPurple)" opacity="0.9" />
+              <text x="155" y="179" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">Amber_Bell_Arp_Melody</text>
+              <rect x="535" y="161" width="245" height="28" rx="6" fill="url(#clipPurple)" opacity="0.9" />
+              <text x="545" y="179" fill="#fff" font-family="monospace" font-size="10" font-weight="bold">Chorus_Lead_Layered</text>
+
+              <!-- Track 5 Acoustic Guitar -->
+              <rect x="305" y="199" width="220" height="28" rx="6" fill="url(#clipAmber)" opacity="0.85" />
+              <text x="315" y="217" fill="#120d0c" font-family="monospace" font-size="10" font-weight="bold">Acoustic_Guitar_Loop.wav</text>
+
+              <!-- Track 6 Vocal Waveform -->
+              <rect x="375" y="237" width="405" height="28" rx="6" fill="#0284c7" opacity="0.85" />
+              <path d="M385 251 Q395 240 405 251 T425 251 T445 251 T465 251 T485 251 T505 251 T525 251 T545 251 T565 251 T585 251 T605 251 T625 251 T645 251 T665 251 T685 251 T705 251 T725 251 T745 251" stroke="#ffffff" stroke-width="2" fill="none" />
+
+              <!-- Playhead Line -->
+              <line x1="395" y1="38" x2="395" y2="280" stroke="#ffffff" stroke-width="2" />
+              <polygon points="389,38 401,38 395,47" fill="#f5821f" />
+
+              <!-- Bottom FL Mixer Section -->
+              <rect x="0" y="282" width="800" height="148" fill="#181210" />
+              <text x="16" y="302" fill="#f5821f" font-family="monospace" font-size="11" font-weight="bold">FL MIXER — MASTER &amp; INSERT CHANNELS</text>
+
+              <!-- Mixer Faders -->
+              <g transform="translate(16, 312)">
+                <!-- Master Channel -->
+                <rect x="0" y="0" width="76" height="106" rx="8" fill="#261b18" stroke="#e61c24" stroke-width="1.5" />
+                <text x="14" y="16" fill="#ff6b6b" font-family="monospace" font-size="10" font-weight="bold">MASTER</text>
+                <rect x="18" y="24" width="10" height="72" rx="3" fill="#0e0a09" />
+                <rect x="18" y="36" width="10" height="60" rx="3" fill="url(#clipAmber)" />
+                <rect x="44" y="24" width="14" height="72" rx="4" fill="#120d0c" />
+                <rect x="41" y="42" width="20" height="10" rx="2" fill="#e61c24" />
+
+                <!-- Insert 1-7 -->
+                <g transform="translate(88, 0)">
+                  <rect x="0" y="0" width="84" height="106" rx="8" fill="#211715" />
+                  <text x="12" y="16" fill="#d6d3d1" font-family="monospace" font-size="10">INS 1: 808</text>
+                  <rect x="18" y="26" width="8" height="68" rx="3" fill="#10b981" />
+                  <rect x="48" y="35" width="18" height="9" rx="2" fill="#f5821f" />
+                </g>
+                <g transform="translate(182, 0)">
+                  <rect x="0" y="0" width="84" height="106" rx="8" fill="#211715" />
+                  <text x="12" y="16" fill="#d6d3d1" font-family="monospace" font-size="10">INS 2: KICK</text>
+                  <rect x="18" y="32" width="8" height="62" rx="3" fill="#f5821f" />
+                  <rect x="48" y="40" width="18" height="9" rx="2" fill="#f5821f" />
+                </g>
+                <g transform="translate(276, 0)">
+                  <rect x="0" y="0" width="84" height="106" rx="8" fill="#211715" />
+                  <text x="12" y="16" fill="#d6d3d1" font-family="monospace" font-size="10">INS 3: HATS</text>
+                  <rect x="18" y="42" width="8" height="52" rx="3" fill="#34d399" />
+                  <rect x="48" y="50" width="18" height="9" rx="2" fill="#f5821f" />
+                </g>
+                <g transform="translate(370, 0)">
+                  <rect x="0" y="0" width="84" height="106" rx="8" fill="#211715" />
+                  <text x="12" y="16" fill="#d6d3d1" font-family="monospace" font-size="10">INS 4: LEAD</text>
+                  <rect x="18" y="30" width="8" height="64" rx="3" fill="#ec4899" />
+                  <rect x="48" y="38" width="18" height="9" rx="2" fill="#f5821f" />
+                </g>
+                <g transform="translate(464, 0)">
+                  <rect x="0" y="0" width="84" height="106" rx="8" fill="#211715" />
+                  <text x="12" y="16" fill="#d6d3d1" font-family="monospace" font-size="10">INS 5: VOX</text>
+                  <rect x="18" y="28" width="8" height="66" rx="3" fill="#38bdf8" />
+                  <rect x="48" y="34" width="18" height="9" rx="2" fill="#e61c24" />
+                </g>
+                <!-- Parametric EQ2 Mini Visualizer -->
+                <g transform="translate(560, 0)">
+                  <rect x="0" y="0" width="206" height="106" rx="8" fill="#120d0c" stroke="#f5821f" stroke-width="1" />
+                  <text x="12" y="16" fill="#ffb347" font-family="monospace" font-size="10" font-weight="bold">FRUITY PARAMETRIC EQ 2</text>
+                  <path d="M12 85 Q55 35 100 68 T194 45" stroke="#f5821f" stroke-width="2.5" fill="none" />
+                  <circle cx="55" cy="54" r="5" fill="#e61c24" />
+                  <circle cx="115" cy="64" r="5" fill="#f5821f" />
+                  <circle cx="170" cy="48" r="5" fill="#10b981" />
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Production Services Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="rounded-2xl border border-studio-red/30 bg-studio-card p-4">
+              <div class="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-studio-red/20 text-studio-red font-bold">01</div>
+              <h4 class="text-sm font-extrabold text-white">Custom Beat Production</h4>
+              <p class="mt-1 text-xs text-stone-400">Tailor-made Trap, Hip-Hop, Lo-Fi &amp; EDM instrumentals built in FL Studio.</p>
+            </div>
+            <div class="rounded-2xl border border-studio-amber/30 bg-studio-card p-4">
+              <div class="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-studio-amber/20 text-studio-amber font-bold">02</div>
+              <h4 class="text-sm font-extrabold text-white">Vocal Tracking &amp; Mix</h4>
+              <p class="mt-1 text-xs text-stone-400">Crystal-clear condenser mic recording, vocal tuning, and punchy mastering.</p>
+            </div>
+            <div class="rounded-2xl border border-orange-500/30 bg-studio-card p-4">
+              <div class="mb-2 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500/20 text-orange-400 font-bold">03</div>
+              <h4 class="text-sm font-extrabold text-white">ISRC / UPC Release Prep</h4>
+              <p class="mt-1 text-xs text-stone-400">Distribution-ready WAV masters &amp; stems for Bandcamp, Spotify &amp; Apple Music.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Studio Photo Highlight (6978.jpg & 6980.jpg) -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="studio-photo-frame relative overflow-hidden rounded-3xl border border-studio-red/40 bg-studio-card shadow-2xl">
+            <div class="relative h-[340px] w-full">
+              <img 
+                src="6978.jpg" 
+                data-photo-key="6978.jpg"
+                alt="Recording vocals and monitoring beats at ANI BEATS" 
+                class="h-full w-full object-cover object-top transition duration-500 hover:scale-105"
+              />
+              <canvas
+                data-photo-key="6978.jpg"
+                class="hidden h-full w-full object-cover"
+              ></canvas>
+            </div>
+            <div class="p-5 bg-gradient-to-t from-studio-dark to-studio-card">
+              <span class="rounded-lg bg-studio-amber/20 px-2.5 py-1 text-[11px] font-bold text-studio-amber">VOCAL &amp; BEAT MONITORING • 6978.JPG</span>
+              <h3 class="mt-2 text-lg font-extrabold text-white">Precision Studio Acoustics</h3>
+              <p class="mt-1 text-xs leading-relaxed text-stone-300">
+                Equipped with studio reference headphones, acoustic wall treatment, and RØDE condenser microphones so every 808 sub and vocal nuance translates cleanly on any speaker.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4 rounded-3xl border border-studio-amber/30 bg-studio-card p-4 shadow-xl">
+            <div class="studio-photo-frame relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl border border-studio-amber/40">
+              <img 
+                src="6980.jpg" 
+                data-photo-key="6980.jpg"
+                alt="Composer smiling in warm amber studio lighting" 
+                class="h-full w-full object-cover object-top"
+              />
+              <canvas
+                data-photo-key="6980.jpg"
+                class="hidden h-full w-full object-cover"
+              ></canvas>
+            </div>
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wider text-studio-amber">Composer's Vision • 6980.JPG</p>
+              <p class="mt-1 text-sm font-bold text-white">"Every rhythm tells a story—blending warm live textures with modern digital bounce."</p>
+              <p class="mt-1 text-xs text-stone-400">— ANI BEATS</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDIO PHOTO GALLERY SECTION (All 5 Uploaded Photos) -->
+  <section id="gallery" class="border-t border-white/10 bg-studio-card/40 py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-[0.22em] text-studio-amber">Visual Sessions • 5 Studio Photos</span>
+          <h2 class="mt-2 text-3xl font-black sm:text-4xl text-white">
+            Inside <span class="text-transparent bg-clip-text bg-gradient-to-r from-studio-red to-studio-amber">ANI BEATS</span> Studio
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-stone-400">Click any studio photo to view full screen (6977, 6978, 6982, 6980, 6955)</p>
+      </div>
+
+      <!-- Masonry / Bento Gallery Grid featuring all 5 photos -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Photo 1: 6977.jpg -->
+        <div onclick="openLightbox('6977.jpg', 'ANI BEATS — Lead Composer & Beatmaker Session (6977.jpg)')" class="studio-photo-frame group relative cursor-pointer overflow-hidden rounded-3xl border border-studio-amber/30 bg-studio-card shadow-xl lg:row-span-2">
+          <div class="h-full min-h-[380px] w-full">
+            <img src="6977.jpg" data-photo-key="6977.jpg" alt="ANI BEATS Studio Pose 1 (6977.jpg)" class="h-full min-h-[380px] w-full object-cover object-top transition duration-500 group-hover:scale-105" />
+            <canvas data-photo-key="6977.jpg" class="hidden h-full min-h-[380px] w-full object-cover"></canvas>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-studio-dark/90 via-transparent to-transparent opacity-90"></div>
+          <div class="absolute bottom-4 left-4 right-4">
+            <span class="rounded-lg bg-studio-red px-2.5 py-1 text-[10px] font-extrabold uppercase text-white">Main Studio • 6977.jpg</span>
+            <p class="mt-1.5 text-base font-extrabold text-white">ANI BEATS Studio Vibe</p>
+            <p class="text-xs text-stone-300">RØDE Condenser Booth &amp; Acoustic Wall</p>
+          </div>
+        </div>
+
+        <!-- Photo 2: 6982.jpg -->
+        <div onclick="openLightbox('6982.jpg', 'Headphones On — Mixing & Beat Arrangement (6982.jpg)')" class="studio-photo-frame group relative cursor-pointer overflow-hidden rounded-3xl border border-white/15 bg-studio-card shadow-xl">
+          <div class="h-72 w-full">
+            <img src="6982.jpg" data-photo-key="6982.jpg" alt="ANI BEATS Studio Pose 2 (6982.jpg)" class="h-72 w-full object-cover object-top transition duration-500 group-hover:scale-105" />
+            <canvas data-photo-key="6982.jpg" class="hidden h-72 w-full object-cover"></canvas>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-studio-dark/90 via-transparent to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4">
+            <span class="rounded-lg bg-studio-amber px-2.5 py-1 text-[10px] font-extrabold uppercase text-studio-dark">Monitoring • 6982.jpg</span>
+            <p class="mt-1 text-sm font-extrabold text-white">Dialing In The 808s</p>
+          </div>
+        </div>
+
+        <!-- Photo 3: 6955.png -->
+        <div onclick="openLightbox('6955.png', 'Warm Amber Studio Lighting — Late Night Beat Session (6955.png)')" class="studio-photo-frame group relative cursor-pointer overflow-hidden rounded-3xl border border-white/15 bg-studio-card shadow-xl">
+          <div class="h-72 w-full">
+            <img src="6955.png" data-photo-key="6955.png" alt="ANI BEATS Studio Pose 3 (6955.png)" class="h-72 w-full object-cover object-top transition duration-500 group-hover:scale-105" />
+            <canvas data-photo-key="6955.png" class="hidden h-72 w-full object-cover"></canvas>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-studio-dark/90 via-transparent to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4">
+            <span class="rounded-lg bg-orange-500 px-2.5 py-1 text-[10px] font-extrabold uppercase text-white">Late Night Lab • 6955.png</span>
+            <p class="mt-1 text-sm font-extrabold text-white">Golden Amber Session</p>
+          </div>
+        </div>
+
+        <!-- Photo 4: 6978.jpg -->
+        <div onclick="openLightbox('6978.jpg', 'Vocal Tracking & Live Instrumental Recording (6978.jpg)')" class="studio-photo-frame group relative cursor-pointer overflow-hidden rounded-3xl border border-white/15 bg-studio-card shadow-xl">
+          <div class="h-72 w-full">
+            <img src="6978.jpg" data-photo-key="6978.jpg" alt="ANI BEATS Studio Pose 4 (6978.jpg)" class="h-72 w-full object-cover object-top transition duration-500 group-hover:scale-105" />
+            <canvas data-photo-key="6978.jpg" class="hidden h-72 w-full object-cover"></canvas>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-studio-dark/90 via-transparent to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4">
+            <span class="rounded-lg bg-studio-red px-2.5 py-1 text-[10px] font-extrabold uppercase text-white">Tracking • 6978.jpg</span>
+            <p class="mt-1 text-sm font-extrabold text-white">Live Mic &amp; Melodies</p>
+          </div>
+        </div>
+
+        <!-- Photo 5: 6980.jpg -->
+        <div onclick="openLightbox('6980.jpg', 'Creative Flow at ANI BEATS Studio (6980.jpg)')" class="studio-photo-frame group relative cursor-pointer overflow-hidden rounded-3xl border border-white/15 bg-studio-card shadow-xl">
+          <div class="h-72 w-full">
+            <img src="6980.jpg" data-photo-key="6980.jpg" alt="ANI BEATS Studio Pose 5 (6980.jpg)" class="h-72 w-full object-cover object-top transition duration-500 group-hover:scale-105" />
+            <canvas data-photo-key="6980.jpg" class="hidden h-72 w-full object-cover"></canvas>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-studio-dark/90 via-transparent to-transparent"></div>
+          <div class="absolute bottom-4 left-4 right-4">
+            <span class="rounded-lg bg-studio-amber px-2.5 py-1 text-[10px] font-extrabold uppercase text-studio-dark">Inspiration • 6980.jpg</span>
+            <p class="mt-1 text-sm font-extrabold text-white">Signature Red &amp; Black Vibe</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFICIAL MERCH & BANDCAMP BUNDLES SECTION -->
+  <section id="merch" class="relative border-t border-white/10 py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-[0.22em] text-studio-red">Bandcamp Merch &amp; Apparel</span>
+          <h2 class="mt-2 text-3xl font-black sm:text-4xl text-white">
+            Official <span class="text-transparent bg-clip-text bg-gradient-to-r from-studio-red to-studio-amber">Studio Merch</span> &amp; Bundles
+          </h2>
+          <p class="mt-2 max-w-2xl text-sm sm:text-base text-stone-300">
+            Rep the signature <strong class="text-white">Crimson Red, Espresso Black &amp; White stripe</strong> aesthetic straight from the studio photos (<span class="font-mono text-xs text-studio-amber">6977.jpg, 6978.jpg, 6982.jpg, 6980.jpg, 6955.png</span>). Every apparel order includes an instant <span class="text-studio-amber font-semibold">Digital Beat Tape Download Bundle</span>!
+          </p>
+        </div>
+        <span class="inline-flex items-center gap-2 rounded-2xl border border-studio-amber/35 bg-studio-card px-4 py-2 text-xs font-bold text-studio-gold">
+          <svg class="h-4 w-4 text-studio-amber" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+          <span>Ships Worldwide &amp; Islandwide</span>
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        
+        <!-- Merch Item 1: Signature Red/Black Studio T-Shirt + Studio Lookbook Preview -->
+        <div class="glass-panel flex flex-col justify-between rounded-3xl p-6 shadow-xl transition hover:border-studio-red/50">
+          <div>
+            <div class="relative mb-5 flex h-60 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-studio-elevated to-studio-dark border border-white/10 p-4">
+              <span class="absolute left-3 top-3 rounded-lg bg-studio-red px-2.5 py-1 text-[10px] font-extrabold uppercase text-white">Limited Edition</span>
+              <span class="absolute right-3 top-3 rounded-lg bg-studio-amber/20 px-2.5 py-1 text-[10px] font-bold text-studio-amber">+ Free Beat Tape</span>
+              
+              <!-- Custom SVG Illustration of Signature Red/Black/White Color-Block T-Shirt -->
+              <svg viewBox="0 0 240 220" class="h-44 w-auto drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
+                <path d="M70 25 L95 15 Q120 28 145 15 L170 25 L215 58 L192 92 L170 76 L170 200 L70 200 L70 76 L48 92 L25 58 Z" fill="#e61c24" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.25" />
+                <rect x="70" y="74" width="100" height="7" fill="#ffffff" />
+                <rect x="70" y="81" width="100" height="58" fill="#140f0e" />
+                <text x="120" y="108" text-anchor="middle" fill="#f5821f" font-family="sans-serif" font-size="13" font-weight="900" letter-spacing="2">ANI BEATS</text>
+                <text x="120" y="122" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="7" letter-spacing="2">MUSIC LAB</text>
+                <polygon points="25,58 48,92 55,86 33,52" fill="#140f0e" />
+                <polygon points="215,58 192,92 185,86 207,52" fill="#140f0e" />
+              </svg>
+
+              <!-- Studio Lookbook Thumbnail Badge (6977.jpg) -->
+              <button type="button" onclick="openLightbox('6977.jpg', 'Worn in Studio Session — 6977.jpg')" class="studio-photo-frame absolute bottom-3 right-3 flex items-center gap-1.5 rounded-xl border border-studio-amber/50 bg-studio-dark/90 p-1.5 pr-2.5 text-left shadow-lg hover:border-studio-amber">
+                <div class="h-9 w-9 overflow-hidden rounded-lg">
+                  <img src="6977.jpg" data-photo-key="6977.jpg" alt="Studio Look 6977.jpg" class="h-full w-full object-cover object-top" />
+                  <canvas data-photo-key="6977.jpg" class="hidden h-full w-full object-cover"></canvas>
+                </div>
+                <span class="font-mono text-[10px] font-bold text-studio-gold">6977.JPG</span>
+              </button>
+            </div>
+
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <h3 class="text-lg font-extrabold text-white">Ani Beats Color-Block Studio Tee</h3>
+                <p class="mt-1 text-xs text-stone-400">100% Heavyweight Cotton • Red, Black &amp; White</p>
+              </div>
+              <span class="text-xl font-black text-studio-amber">$25</span>
+            </div>
+
+            <!-- Size Selector -->
+            <div class="mt-4">
+              <label class="text-[11px] font-bold uppercase tracking-wider text-stone-400">Select Size:</label>
+              <div class="mt-1.5 flex gap-2" data-size-group="tee1">
+                <button type="button" onclick="selectSize(this, 'S')" class="size-btn rounded-lg border border-white/15 bg-studio-dark px-3 py-1.5 text-xs font-bold text-stone-300">S</button>
+                <button type="button" onclick="selectSize(this, 'M')" class="size-btn active rounded-lg border border-studio-amber bg-studio-amber/20 px-3 py-1.5 text-xs font-bold text-studio-amber">M</button>
+                <button type="button" onclick="selectSize(this, 'L')" class="size-btn rounded-lg border border-white/15 bg-studio-dark px-3 py-1.5 text-xs font-bold text-stone-300">L</button>
+                <button type="button" onclick="selectSize(this, 'XL')" class="size-btn rounded-lg border border-white/15 bg-studio-dark px-3 py-1.5 text-xs font-bold text-stone-300">XL</button>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="addToCart('Ani Beats Color-Block Studio Tee', 25, 'tee1')" class="mt-6 w-full rounded-2xl bg-gradient-to-r from-studio-red to-studio-amber py-3 text-xs font-extrabold text-white shadow-lg transition hover:brightness-110 active:scale-95">
+            Add Merch + Digital Bundle to Cart
+          </button>
+        </div>
+
+        <!-- Merch Item 2: Long-Sleeve Studio Sweatshirt (Exact Outfit Replica + 6982.jpg Lookbook) -->
+        <div class="glass-panel-red flex flex-col justify-between rounded-3xl p-6 shadow-xl transition hover:border-studio-amber/60">
+          <div>
+            <div class="relative mb-5 flex h-60 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-studio-elevated to-studio-dark border border-white/10 p-4">
+              <span class="absolute left-3 top-3 rounded-lg bg-studio-amber px-2.5 py-1 text-[10px] font-extrabold uppercase text-studio-dark">Signature Edition</span>
+              <span class="absolute right-3 top-3 rounded-lg bg-studio-red/25 px-2.5 py-1 text-[10px] font-bold text-red-300">+ WAV Stems</span>
+              
+              <!-- Custom SVG Illustration of the Exact Long-Sleeve Red/Black/White Sweatshirt from Photos -->
+              <svg viewBox="0 0 240 220" class="h-44 w-auto drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
+                <path d="M72 24 L96 14 Q120 26 144 14 L168 24 L212 155 L190 162 L168 85 L168 198 L72 198 L72 85 L50 162 L28 155 Z" fill="#e61c24" />
+                <path d="M168 24 L183 68 L168 74 Z" fill="#140f0e" />
+                <rect x="72" y="72" width="96" height="6" fill="#ffffff" />
+                <rect x="72" y="78" width="96" height="58" fill="#140f0e" />
+                <text x="142" y="94" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="6" font-weight="bold">ANI BEATS</text>
+                <rect x="72" y="188" width="96" height="10" fill="#140f0e" />
+                <polygon points="28,155 50,162 52,153 31,146" fill="#140f0e" />
+                <polygon points="212,155 190,162 188,153 209,146" fill="#140f0e" />
+              </svg>
+
+              <!-- Studio Lookbook Thumbnail Badge (6982.jpg) -->
+              <button type="button" onclick="openLightbox('6982.jpg', 'Studio Crewneck Edition — 6982.jpg')" class="studio-photo-frame absolute bottom-3 right-3 flex items-center gap-1.5 rounded-xl border border-studio-amber/50 bg-studio-dark/90 p-1.5 pr-2.5 text-left shadow-lg hover:border-studio-amber">
+                <div class="h-9 w-9 overflow-hidden rounded-lg">
+                  <img src="6982.jpg" data-photo-key="6982.jpg" alt="Studio Look 6982.jpg" class="h-full w-full object-cover object-top" />
+                  <canvas data-photo-key="6982.jpg" class="hidden h-full w-full object-cover"></canvas>
+                </div>
+                <span class="font-mono text-[10px] font-bold text-studio-gold">6982.JPG</span>
+              </button>
+            </div>
+
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <h3 class="text-lg font-extrabold text-white">Studio Booth Long-Sleeve Crew</h3>
+                <p class="mt-1 text-xs text-stone-400">Exact Studio Photoshoot Edition • Fleece</p>
+              </div>
+              <span class="text-xl font-black text-studio-amber">$38</span>
+            </div>
+
+            <!-- Size Selector -->
+            <div class="mt-4">
+              <label class="text-[11px] font-bold uppercase tracking-wider text-stone-400">Select Size:</label>
+              <div class="mt-1.5 flex gap-2" data-size-group="crew1">
+                <button type="button" onclick="selectSize(this, 'S')" class="size-btn rounded-lg border border-white/15 bg-studio-dark px-3 py-1.5 text-xs font-bold text-stone-300">S</button>
+                <button type="button" onclick="selectSize(this, 'M')" class="size-btn rounded-lg border border-white/15 bg-studio-dark px-3 py-1.5 text-xs font-bold text-stone-300">M</button>
+                <button type="button" onclick="selectSize(this, 'L')" class="size-btn active rounded-lg border border-studio-amber bg-studio-amber/20 px-3 py-1.5 text-xs font-bold text-studio-amber">L</button>
+                <button type="button" onclick="selectSize(this, 'XL')" class="size-btn rounded-lg border border-white/15 bg-studio-dark px-3 py-1.5 text-xs font-bold text-stone-300">XL</button>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="addToCart('Studio Booth Long-Sleeve Crew', 38, 'crew1')" class="mt-6 w-full rounded-2xl bg-gradient-to-r from-studio-amber to-studio-red py-3 text-xs font-extrabold text-white shadow-lg transition hover:brightness-110 active:scale-95">
+            Add Crewneck + Stems Bundle
+          </button>
+        </div>
+
+        <!-- Merch Item 3: Producer Sample Pack & FL Studio Template + 6955.png Session Art -->
+        <div class="glass-panel flex flex-col justify-between rounded-3xl p-6 shadow-xl transition hover:border-studio-amber/50">
+          <div>
+            <div class="relative mb-5 flex h-60 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-studio-elevated to-studio-dark border border-white/10 p-4">
+              <span class="absolute left-3 top-3 rounded-lg bg-emerald-600 px-2.5 py-1 text-[10px] font-extrabold uppercase text-white">Producer Pack</span>
+              <span class="absolute right-3 top-3 rounded-lg bg-white/10 px-2.5 py-1 text-[10px] font-bold text-stone-200">Royalty-Free</span>
+
+              <!-- Custom SVG Vinyl + Drum Kit Box Graphic -->
+              <svg viewBox="0 0 240 220" class="h-44 w-auto drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="155" cy="110" r="68" fill="#120d0c" stroke="#333" stroke-width="2" />
+                <circle cx="155" cy="110" r="52" fill="none" stroke="#262626" stroke-width="1.5" />
+                <circle cx="155" cy="110" r="38" fill="none" stroke="#262626" stroke-width="1.5" />
+                <circle cx="155" cy="110" r="22" fill="#f5821f" />
+                <circle cx="155" cy="110" r="5" fill="#120d0c" />
+                <rect x="30" y="36" width="132" height="148" rx="12" fill="url(#clipRed)" stroke="#ffb347" stroke-width="2" />
+                <rect x="42" y="50" width="108" height="65" rx="8" fill="#140f0e" />
+                <text x="96" y="78" text-anchor="middle" fill="#f5821f" font-family="sans-serif" font-size="14" font-weight="900">ANI BEATS</text>
+                <text x="96" y="95" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="9">808 &amp; DRUM KIT</text>
+                <text x="96" y="142" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="800">VOL. 01 BUNDLE</text>
+                <text x="96" y="160" text-anchor="middle" fill="#ffe4e6" font-family="monospace" font-size="8">150+ WAV • MIDI • FLP</text>
+              </svg>
+
+              <!-- Studio Lookbook Thumbnail Badge (6955.png) -->
+              <button type="button" onclick="openLightbox('6955.png', 'Late Night Sample Session — 6955.png')" class="studio-photo-frame absolute bottom-3 right-3 flex items-center gap-1.5 rounded-xl border border-studio-amber/50 bg-studio-dark/90 p-1.5 pr-2.5 text-left shadow-lg hover:border-studio-amber">
+                <div class="h-9 w-9 overflow-hidden rounded-lg">
+                  <img src="6955.png" data-photo-key="6955.png" alt="Studio Look 6955.png" class="h-full w-full object-cover object-top" />
+                  <canvas data-photo-key="6955.png" class="hidden h-full w-full object-cover"></canvas>
+                </div>
+                <span class="font-mono text-[10px] font-bold text-studio-gold">6955.PNG</span>
+              </button>
+            </div>
+  <!-- LIGHTBOX MODAL FOR STUDIO PHOTOS -->
+  <div id="lightbox-modal" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4 backdrop-blur-md">
+    <div onclick="event.stopPropagation()" class="relative max-w-3xl w-full overflow-hidden rounded-3xl border border-studio-amber/40 bg-studio-card shadow-2xl">
+      <button onclick="closeLightbox()" class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-studio-dark/80 text-white hover:bg-studio-red">
+        ✕
+      </button>
+      <div class="studio-photo-frame max-h-[75vh] w-full overflow-hidden bg-black flex items-center justify-center">
+        <img id="lightbox-img" src="" data-photo-key="" alt="Studio Lightbox Preview" class="max-h-[75vh] w-full object-contain bg-black" />
+        <canvas id="lightbox-canvas" data-photo-key="" class="hidden max-h-[75vh] w-full object-contain"></canvas>
+      </div>
+      <div class="p-4 text-center">
+        <p id="lightbox-caption" class="text-sm font-bold text-studio-gold"></p>
+      </div>
+    </div>
+  </div>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // 3. LIVE SPECTRUM VISUALIZER CANVAS
+    // =========================================================================
+    const canvas = document.getElementById('visualizer-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      if (!canvas) return;
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function drawVisualizer() {
+      requestAnimationFrame(drawVisualizer);
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const bars = 48;
+      const barWidth = (w / bars) - 4;
+      const isActive = activeTrackId !== null || seqInterval !== null;
+
+      for (let i = 0; i < bars; i++) {
+        const time = Date.now() * 0.006;
+        const heightFactor = isActive
+          ? (Math.sin(time + i * 0.45) * 0.35 + Math.cos(time * 1.6 - i * 0.3) * 0.35 + 0.45)
+          : 0.12 + Math.sin(i * 0.3) * 0.05;
+
+        const barHeight = Math.max(6, heightFactor * (h - 14));
+        const x = i * (barWidth + 4) + 2;
+        const y = (h - barHeight) / 2;
+
+        const grad = ctx.createLinearGradient(0, y, 0, y + barHeight);
+        grad.addColorStop(0, '#f5821f');
+        grad.addColorStop(0.5, '#e61c24');
+        grad.addColorStop(1, '#ffb347');
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.roundRect(x, y, barWidth, barHeight, 4);
+        ctx.fill();
+      }
+    }
+    drawVisualizer();
+
+    // =========================================================================
+    // 4. INTERACTIVE MINI FL STUDIO 16-STEP SEQUENCER
+    // =========================================================================
+    const seqTracks = [
+      { name: '808 Kick', colorClass: 'active-kick', pattern: [1,0,0,0, 0,0,1,0, 0,0,1,0, 0,0,0,0] },
+      { name: 'Trap Snare', colorClass: 'active-snare', pattern: [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0] },
+      { name: 'Hi-Hat 1/16', colorClass: 'active-hat', pattern: [1,0,1,0, 1,0,1,0, 1,0,1,1, 1,0,1,1] },
+      { name: 'Amber Bell', colorClass: 'active-melody', pattern: [1,0,0,1, 0,0,1,0, 1,0,0,1, 0,1,0,0] }
+    ];
+
+    let seqInterval = null;
+    let currentSeqStep = -1;
+
+    function renderSequencer() {
+      const container = document.getElementById('sequencer-rows');
+      container.innerHTML = seqTracks.map((row, rIdx) => `
+        <div class="flex items-center gap-3">
+          <div class="w-28 shrink-0 rounded-xl border border-white/10 bg-studio-dark px-3 py-2 font-mono text-xs font-bold text-stone-200">
+            ${row.name}
+          </div>
+          <div class="grid flex-1 grid-cols-16 gap-1.5" style="grid-template-columns: repeat(16, minmax(0, 1fr));">
+            ${row.pattern.map((val, cIdx) => `
+              <button 
+                type="button"
+                onclick="toggleSeqCell(${rIdx}, ${cIdx})"
+                class="fl-step h-8 rounded-lg border ${cIdx % 4 === 0 ? 'border-white/25' : 'border-white/10'} ${val ? row.colorClass : 'bg-studio-dark/90 hover:bg-white/10'} ${currentSeqStep === cIdx ? 'current-col' : ''}"
+                aria-label="${row.name} step ${cIdx + 1}">
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleSeqCell(rIdx, cIdx) {
+      seqTracks[rIdx].pattern[cIdx] = seqTracks[rIdx].pattern[cIdx] ? 0 : 1;
+      renderSequencer();
+    }
+
+    function resetSequencer() {
+      seqTracks[0].pattern = [1,0,0,0, 0,0,1,0, 0,0,1,0, 0,0,0,0];
+      seqTracks[1].pattern = [0,0,0,0, 1,0,0,0, 0,0,0,0, 1,0,0,0];
+      seqTracks[2].pattern = [1,0,1,0, 1,0,1,0, 1,0,1,1, 1,0,1,1];
+      seqTracks[3].pattern = [1,0,0,1, 0,0,1,0, 1,0,0,1, 0,1,0,0];
+      renderSequencer();
+      showToast('FL Channel Rack', 'Default Trap pattern restored.');
+    }
+
+    function triggerSequencerStep(step) {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+
+      // Kick
+      if (seqTracks[0].pattern[step]) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.16);
+        gain.gain.setValueAtTime(0.65, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.26);
+      }
+      // Snare
+      if (seqTracks[1].pattern[step]) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(90, now + 0.12);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      }
+      // Hat
+      if (seqTracks[2].pattern[step]) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(7500, now);
+        gain.gain.setValueAtTime(0.06, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.045);
+      }
+      // Bell Melody
+      if (seqTracks[3].pattern[step]) {
+        const scale = [261.63, 311.13, 392.00, 523.25, 466.16];
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(scale[step % scale.length], now);
+        gain.gain.setValueAtTime(0.22, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.23);
+      }
+    }
+
+    function toggleSequencer() {
+      initAudio();
+      if (seqInterval) {
+        clearInterval(seqInterval);
+        seqInterval = null;
+        currentSeqStep = -1;
+        document.getElementById('seq-play-text').textContent = 'Play Pattern';
+        renderSequencer();
+        return;
+      }
+      stopAllAudio();
+      const bpm = Math.min(170, Math.max(75, parseInt(document.getElementById('seq-bpm').value) || 130));
+      const stepTime = (60 / bpm / 4) * 1000;
+      document.getElementById('seq-play-text').textContent = 'Stop Pattern';
+      document.getElementById('visualizer-status').textContent = `FL CHANNEL RACK PLAYING • ${bpm} BPM`;
+
+      currentSeqStep = 0;
+      triggerSequencerStep(currentSeqStep);
+      renderSequencer();
+
+      seqInterval = setInterval(() => {
+        currentSeqStep = (currentSeqStep + 1) % 16;
+        triggerSequencerStep(currentSeqStep);
+        renderSequencer();
+      }, stepTime);
+    }
+
+    // =========================================================================
+    // 5. MERCH SIZE SELECTOR, CART & MODALS
+    // =========================================================================
+    const selectedSizes = { tee1: 'M', crew1: 'L' };
+    let cart = [];
+
+    function selectSize(btn, size) {
+      const group = btn.parentElement;
+      const groupName = group.getAttribute('data-size-group');
+      selectedSizes[groupName] = size;
+
+      group.querySelectorAll('.size-btn').forEach(b => {
+        b.className = 'size-btn rounded-lg border border-white/15 bg-studio-dark px-3 py-1.5 text-xs font-bold text-stone-300';
+      });
+      btn.className = 'size-btn active rounded-lg border border-studio-amber bg-studio-amber/20 px-3 py-1.5 text-xs font-bold text-studio-amber';
+    }
+
+    function addToCart(name, price, sizeGroup) {
+      const sizeLabel = sizeGroup ? ` (Size: ${selectedSizes[sizeGroup]})` : '';
+      cart.push({ title: name + sizeLabel, price });
+      updateCartUI();
+      showToast('Added to Studio Cart', `${name}${sizeLabel} — $${price}`);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      document.getElementById('cart-badge').textContent = cart.length;
+      const list = document.getElementById('cart-items-list');
+      const totalEl = document.getElementById('cart-total');
+
+      if (cart.length === 0) {
+        list.innerHTML = `<p class="text-sm text-stone-400">Your cart is currently empty.</p>`;
+        totalEl.textContent = '$0.00';
+        return;
+      }
+
+      let sum = 0;
+      list.innerHTML = cart.map((item, idx) => {
+        sum += item.price;
+        return `
+          <div class="flex items-center justify-between rounded-2xl border border-white/10 bg-studio-dark p-3.5">
+            <div>
+              <p class="text-xs font-extrabold text-white">${item.title}</p>
+              <p class="text-xs font-bold text-studio-amber">$${item.price}.00</p>
+            </div>
+            <button onclick="removeFromCart(${idx})" class="rounded-lg bg-studio-red/20 px-2.5 py-1 text-xs font-bold text-studio-red hover:bg-studio-red hover:text-white">Remove</button>
+          </div>
+        `;
+      }).join('');
+
+      totalEl.textContent = `$${sum}.00`;
+    }
+
+    function openCartModal() {
+      document.getElementById('cart-modal').classList.remove('hidden');
+      document.getElementById('cart-modal').classList.add('flex');
+    }
+
+    function closeCartModal() {
+      document.getElementById('cart-modal').classList.add('hidden');
+      document.getElementById('cart-modal').classList.remove('flex');
+    }
+
+    function checkoutCart() {
+      if (cart.length === 0) {
+        showToast('Cart Empty', 'Select a beat license or official merch bundle first!');
+        return;
+      }
+      closeCartModal();
+      showToast('Redirecting to Bandcamp Checkout', 'Your bundle & digital download order is ready!');
+      cart = [];
+      updateCartUI();
+    }
+
+    // Lightbox Functions
+    function openLightbox(src, caption) {
+      const imgEl = document.getElementById('lightbox-img');
+      const canvasEl = document.getElementById('lightbox-canvas');
+      imgEl.setAttribute('data-photo-key', src);
+      canvasEl.setAttribute('data-photo-key', src);
+      imgEl.classList.remove('hidden');
+      canvasEl.classList.add('hidden');
+      imgEl.src = src;
+      document.getElementById('lightbox-caption').textContent = caption;
+      document.getElementById('lightbox-modal').classList.remove('hidden');
+      document.getElementById('lightbox-modal').classList.add('flex');
+      bindStudioPhotoFallbacks();
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox-modal').classList.add('hidden');
+      document.getElementById('lightbox-modal').classList.remove('flex');
+    }
+
+    // Hero Photo Switcher across all 5 uploaded studio photos
+    function setHeroPhoto(photoFile, caption, clickedBtn) {
+      const heroImg = document.getElementById('hero-studio-img');
+      const heroCanvas = document.getElementById('hero-studio-canvas');
+      if (heroImg && heroCanvas) {
+        heroImg.setAttribute('data-photo-key', photoFile);
+        heroCanvas.setAttribute('data-photo-key', photoFile);
+        heroImg.classList.remove('hidden');
+        heroCanvas.classList.add('hidden');
+        heroImg.src = photoFile;
+        bindStudioPhotoFallbacks();
+      }
+      document.querySelectorAll('.hero-cam-btn').forEach(btn => {
+        btn.className = 'hero-cam-btn rounded-lg bg-white/10 px-2 py-1 font-mono text-[10px] font-bold text-stone-200 hover:bg-white/20';
+      });
+      if (clickedBtn) {
+        clickedBtn.className = 'hero-cam-btn active rounded-lg bg-gradient-to-r from-studio-red to-studio-amber px-2 py-1 font-mono text-[10px] font-extrabold text-white';
+      }
+      showToast('ANI BEATS Studio Cam', caption);
+    }
+
+    // Canvas-rendered stylized studio portrait fallback for each of the 5 uploaded photos
+    const studioPhotoProfiles = {
+      '6977.jpg': {
+        code: '6977.JPG',
+        tag: 'LEAD COMPOSER • RØDE BOOTH',
+        bgTop: '#2a120e',
+        bgBottom: '#0e0a09',
+        glow: '#f5821f',
+        pose: 'point'
+      },
+      '6978.jpg': {
+        code: '6978.JPG',
+        tag: 'VOCAL & BEAT MONITORING',
+        bgTop: '#241412',
+        bgBottom: '#0e0a09',
+        glow: '#e61c24',
+        pose: 'headphones'
+      },
+      '6982.jpg': {
+        code: '6982.JPG',
+        tag: '808 MIX & ARRANGEMENT',
+        bgTop: '#2c1610',
+        bgBottom: '#0e0a09',
+        glow: '#ffb347',
+        pose: 'headphones'
+      },
+      '6980.jpg': {
+        code: '6980.JPG',
+        tag: 'AMBER COMPOSITION SESSION',
+        bgTop: '#33170c',
+        bgBottom: '#0e0a09',
+        glow: '#f5821f',
+        pose: 'smile'
+      },
+      '6955.png': {
+        code: '6955.PNG',
+        tag: 'LATE NIGHT STUDIO LAB',
+        bgTop: '#291112',
+        bgBottom: '#0e0a09',
+        glow: '#e61c24',
+        pose: 'headphones'
+      }
+    };
+
+    function renderStudioPortraitCanvas(canvas, key) {
+      const profile = studioPhotoProfiles[key] || studioPhotoProfiles['6977.jpg'];
+      const rect = canvas.getBoundingClientRect();
+      const width = Math.max(240, Math.round(rect.width || 480));
+      const height = Math.max(240, Math.round(rect.height || 520));
+      canvas.width = width;
+      canvas.height = height;
+
+      const c = canvas.getContext('2d');
+      c.clearRect(0, 0, width, height);
+
+      // Studio lighting gradient background
+      const bgGrad = c.createLinearGradient(0, 0, width, height);
+      bgGrad.addColorStop(0, profile.bgTop);
+      bgGrad.addColorStop(0.55, '#19110f');
+      bgGrad.addColorStop(1, profile.bgBottom);
+      c.fillStyle = bgGrad;
+      c.fillRect(0, 0, width, height);
+
+      // Warm studio spotlight glow
+      const spot = c.createRadialGradient(width * 0.65, height * 0.32, 15, width * 0.65, height * 0.32, width * 0.65);
+      spot.addColorStop(0, 'rgba(245, 130, 31, 0.38)');
+      spot.addColorStop(0.5, 'rgba(230, 28, 36, 0.16)');
+      spot.addColorStop(1, 'rgba(14, 10, 9, 0)');
+      c.fillStyle = spot;
+      c.fillRect(0, 0, width, height);
+
+      // Acoustic studio wall grid lines
+      c.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      c.lineWidth = 1;
+      for (let x = 0; x < width; x += 28) {
+        c.beginPath();
+        c.moveTo(x, 0);
+        c.lineTo(x, height);
+        c.stroke();
+      }
+
+      const cx = width * 0.56;
+      const headY = height * 0.34;
+      const headR = Math.min(width, height) * 0.12;
+
+      // Studio Condenser Mic on left side
+      const micX = width * 0.24;
+      const micY = height * 0.48;
+      c.strokeStyle = '#3f3f46';
+      c.lineWidth = 4;
+      c.beginPath();
+      c.moveTo(micX, micY + 45);
+      c.lineTo(micX, height);
+      c.stroke();
+
+      c.fillStyle = '#18181b';
+      c.strokeStyle = '#f5821f';
+      c.lineWidth = 2;
+      c.beginPath();
+      c.roundRect(micX - 16, micY - 32, 32, 58, 14);
+      c.fill();
+      c.stroke();
+
+      // Pop filter ring
+      c.strokeStyle = '#a1a1aa';
+      c.lineWidth = 3;
+      c.beginPath();
+      c.ellipse(micX + 28, micY - 12, 8, 24, 0, 0, Math.PI * 2);
+      c.stroke();
+
+      // Signature Red / Black / White Sweatshirt Torso
+      const torsoTop = headY + headR + 12;
+      const torsoW = headR * 2.7;
+      c.fillStyle = '#e61c24';
+      c.beginPath();
+      c.moveTo(cx - torsoW * 0.55, torsoTop);
+      c.lineTo(cx + torsoW * 0.55, torsoTop);
+      c.lineTo(cx + torsoW * 0.68, height);
+      c.lineTo(cx - torsoW * 0.68, height);
+      c.closePath();
+      c.fill();
+
+      // White stripe + black center band
+      c.fillStyle = '#ffffff';
+      c.fillRect(cx - torsoW * 0.58, torsoTop + torsoW * 0.26, torsoW * 1.16, Math.max(4, height * 0.012));
+      c.fillStyle = '#120d0c';
+      c.fillRect(cx - torsoW * 0.61, torsoTop + torsoW * 0.33, torsoW * 1.22, torsoW * 0.42);
+
+      // ANI BEATS text on sweatshirt
+      c.fillStyle = '#f5821f';
+      c.font = `900 ${Math.max(10, Math.round(torsoW * 0.11))}px Inter, sans-serif`;
+      c.textAlign = 'center';
+      c.fillText('ANI BEATS', cx, torsoTop + torsoW * 0.58);
+
+      // Head & Curly Hair
+      c.fillStyle = '#140f0e';
+      c.beginPath();
+      c.arc(cx, headY - 6, headR * 1.15, Math.PI * 0.9, Math.PI * 2.15);
+      c.fill();
+
+      c.fillStyle = '#8d5b4c';
+      c.beginPath();
+      c.arc(cx, headY, headR, 0, Math.PI * 2);
+      c.fill();
+
+      // Eyes & Beard/Smile
+      c.fillStyle = '#18181b';
+      c.beginPath();
+      c.arc(cx - headR * 0.34, headY - 2, 3.2, 0, Math.PI * 2);
+      c.arc(cx + headR * 0.34, headY - 2, 3.2, 0, Math.PI * 2);
+      c.fill();
+
+      c.strokeStyle = '#291914';
+      c.lineWidth = 2.5;
+      c.beginPath();
+      c.arc(cx, headY + headR * 0.28, headR * 0.36, 0.15 * Math.PI, 0.85 * Math.PI);
+      c.stroke();
+
+      // Headphones if pose is headphones
+      if (profile.pose === 'headphones') {
+        c.strokeStyle = '#27272a';
+        c.lineWidth = 6;
+        c.beginPath();
+        c.arc(cx, headY, headR * 1.16, Math.PI * 1.05, Math.PI * 1.95);
+        c.stroke();
+        c.fillStyle = '#18181b';
+        c.fillRect(cx - headR * 1.28, headY - 14, 14, 28);
+        c.fillRect(cx + headR * 1.12, headY - 14, 14, 28);
+      }
+
+      // Corner badge with photo filename
+      c.fillStyle = 'rgba(14, 10, 9, 0.82)';
+      c.beginPath();
+      c.roundRect(14, height - 46, width - 28, 32, 10);
+      c.fill();
+
+      c.fillStyle = profile.glow;
+      c.font = '700 11px "JetBrains Mono", monospace';
+      c.textAlign = 'left';
+      c.fillText(`${profile.code} • ${profile.tag}`, 24, height - 26);
+    }
+
+    function bindStudioPhotoFallbacks() {
+      document.querySelectorAll('img[data-photo-key]').forEach(img => {
+        const key = img.getAttribute('data-photo-key');
+        const parent = img.parentElement;
+        const canvas = parent ? parent.querySelector(`canvas[data-photo-key="${key}"]`) : null;
+
+        const showFallback = () => {
+          if (!canvas) return;
+          img.classList.add('hidden');
+          canvas.classList.remove('hidden');
+          renderStudioPortraitCanvas(canvas, key);
+        };
+
+        img.onerror = showFallback;
+        if (img.complete && img.naturalWidth === 0) {
+          showFallback();
+        }
+      });
+    }
+
+    // Contact Form Handler
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+      e.target.reset();
+      showToast('Session Request Sent!', 'ANI BEATS has received your inquiry and will reply shortly.');
+    }
+
+    // Toast Helper
+    let toastTimeout = null;
+    function showToast(title, msg) {
+      const box = document.getElementById('toast-box');
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-msg').textContent = msg;
+      box.classList.remove('hidden');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.add('hidden');
+      }, 3600);
+    }
+
+    // Mobile Menu Toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Initialize UI on Load
+    window.onload = function () {
+      renderTracks('all');
+      renderSequencer();
+      bindStudioPhotoFallbacks();
+    };
+  </script>
+</body>
+</html>
